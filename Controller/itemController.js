@@ -35,6 +35,71 @@ const addItem = async (req, res) => {
   }
 };
 
+const addBulkItems = async (req, res) => {
+  try {
+    const { categoryId, itemNames } = req.body;
+    
+    // Validate inputs
+    if (!categoryId || !itemNames || !Array.isArray(itemNames)) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Category ID and item names array are required' 
+      });
+    }
+
+    // Check if category exists
+    const isCategoryAvailable = await Category.findById(categoryId);
+    if (!isCategoryAvailable) {
+      return res.status(404).json({ 
+        success: false, 
+        message: "The category is not available" 
+      });
+    }
+
+    const cleanItemNames = itemNames
+      .map(name => name.trim())
+      .filter(name => name !== '');
+
+    if (cleanItemNames.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'No valid item names provided'
+      });
+    }
+
+    const existingItems = await Item.find({ 
+      categoryName: categoryId, 
+      itemName: { $in: cleanItemNames.map(name => new RegExp(`^${name}$`, 'i')) }
+    });
+
+    if (existingItems.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: `Items already exist: ${existingItems.map(item => item.itemName).join(', ')}`
+      });
+    }
+
+    const itemsToCreate = cleanItemNames.map(itemName => ({
+      itemName: itemName.trim(),
+      categoryName: categoryId, 
+    }));
+
+    const createdItems = await Item.insertMany(itemsToCreate);
+
+    res.status(201).json({
+      success: true,
+      data: createdItems,
+      message: `Successfully added ${createdItems.length} items`
+    });
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to add items'
+    });
+  }
+};
 
 const getItem = async (req, res) => {
   try {
@@ -107,6 +172,7 @@ const editItemName = async (req, res) => {
 
 module.exports = {
   addItem,
+  addBulkItems,
   getItem,
   deleteItem,
   editItemName

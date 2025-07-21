@@ -76,6 +76,7 @@ app.get("/api/getcategoryname", categoryController.getCategory);
 
 //item
 app.post("/api/additemname", itemController.addItem);
+app.post("/api/addbulkitems", itemController.addBulkItems);
 app.get("/api/getitemname/:categoryId", itemController.getItem);
 app.put("/api/edititemname", itemController.editItemName);
 app.delete("/api/deleteitemname/:itemId",checkProgramStarted, itemController.deleteItem);
