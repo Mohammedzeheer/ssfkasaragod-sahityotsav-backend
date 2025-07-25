@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("../util/mutler");
-const dataController = require("../controller/getAndPost");
+const dataController = require("../Controller/getAndPost");
 
 router.get("/startprogram", dataController.startProgram);
 router.get("/checkstatprogram", dataController.checkStartProgram);

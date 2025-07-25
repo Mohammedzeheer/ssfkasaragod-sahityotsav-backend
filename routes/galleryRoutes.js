@@ -6,7 +6,7 @@ const {
   getAllImages,
   deleteGalleryImage,
   get3Images
-} = require("../controller/galleryController");
+} = require("../Controller/galleryController");
 
 router.post("/upload-gallery", multer.galleryImagesUpload, saveGalleryImage);
 router.get("/get-gallery", getAllImages);

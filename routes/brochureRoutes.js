@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("../util/mutler");
-const brochureController = require("../controller/addBrochure");
+const brochureController = require("../Controller/addBrochure");
 
 router.put("/addBrochure", multer.brochureImageUpload, brochureController.addBrochure);
 router.get("/getbrochuse", brochureController.getBrochuse);

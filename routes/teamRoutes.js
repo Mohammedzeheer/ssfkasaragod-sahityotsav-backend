@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const teamController = require("../controller/teamController");
+const teamController = require("../Controller/teamController");
 const checkProgramStarted = require("../middleware/program");
 
 router.post("/addteamname", teamController.addTeam);

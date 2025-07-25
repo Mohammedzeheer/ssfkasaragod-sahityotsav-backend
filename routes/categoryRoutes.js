@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const categoryController = require("../controller/categoryController");
+const categoryController = require("../Controller/categoryController");
 const checkProgramStarted = require("../middleware/program");
 
 router.post("/addcategoryname", categoryController.addCategory);

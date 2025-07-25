@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const itemController = require("../controller/itemController");
+const itemController = require("../Controller/itemController");
 const checkProgramStarted = require("../middleware/program");
 
 router.post("/additemname", itemController.addItem);
