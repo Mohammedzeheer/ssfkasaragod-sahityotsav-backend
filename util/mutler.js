@@ -26,9 +26,19 @@ const gallerytorage = new CloudinaryStorage({
     allowed_formats: ['jpg', 'jpeg', "png"]
   }
 })
+
+const eventstorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'event_Images',
+    allowed_formats: ['jpg', 'jpeg', "png"]
+  }
+})
+
 const uploadTemplate = multer({ storage: templateStorage });
 const uploadBrochure = multer({ storage: bochureStorage })
 const uploadGallery = multer({ storage: gallerytorage })
+const uploadEvents = multer({ storage: eventstorage })
 
 const galleryImagesUpload = uploadGallery.single("image");
 
@@ -47,8 +57,11 @@ const brochureImageUpload = uploadBrochure.fields([
 ]
 )
 
+const EventImagesUpload = uploadEvents.single("image");
+
 module.exports = {
   templateImagesUpload,
   brochureImageUpload,
-  galleryImagesUpload
+  galleryImagesUpload,
+  EventImagesUpload
 }
